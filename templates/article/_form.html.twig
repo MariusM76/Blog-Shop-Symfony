@@ -1,0 +1,19 @@
+{{ form_start(form) }}
+
+<div>
+    {{ form_row(form.title) }}
+    {{ form_row(form.body) }}
+</div>
+<div class="my-3">
+
+    Created at{{ form_widget(form.created_at) }}
+</div>
+<div class="my-3">
+    Topic {{ form_widget(form.topic) }}
+</div>
+<div class="my-3">
+    Image (choose file){{ form_widget(form.file) }}
+</div>
+
+    <button  class="btn btn-outline-warning text-dark my-3">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}

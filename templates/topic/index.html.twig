@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Topic index{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+    <h1>Topic index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>No of articles</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for topic in topics %}
+            <tr>
+                <td>{{ topic.id }}</td>
+                <td>{{ topic.name }}</td>
+                <td>{{ topic.getNoArticles }}</td>
+                <td>
+                    <a class="btn btn-outline-info text-dark mx-2" href="{{ path('app_topic_show', {'id': topic.id}) }}">show</a>
+                    <a class="btn btn-outline-warning text-dark mx-2" href="{{ path('app_topic_edit', {'id': topic.id}) }}">edit</a>
+                    <a class="btn btn-outline-danger text-dark mx-2" href="{{ path('app_topic_delete', {'id': topic.id}) }}">delete</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</div>
+
+{% endblock %}

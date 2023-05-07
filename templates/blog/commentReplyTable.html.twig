@@ -1,0 +1,43 @@
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            {% if app.user %}
+                <small>{{ app.user.getName }}:</small>
+                <input hidden id="writer" type="text" name="writer" value="{{ app.user.getName }}">
+                <input hidden id="email" type="text" name="email" value="{{ app.user.getEmail }}">
+            {% else %}
+                <small>YOU ARE A GUEST ( SIGN UP ? )</small>
+            {% endif %}
+        </th>
+        <th>
+            {% if not app.user %}
+                <small>OR POST AS A GUEST</small>
+            {% endif %}
+        </th>
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>
+            {% if not app.user %}
+            <a href="{{ url('app_login') }}" class="btn btn-outline-info text-dark">Login now</a></td>
+        {% endif %}
+        <td>
+            {% if not app.user %}
+                <input id="writer" type="text" name="writer" placeholder="Your name">
+            {% endif %}
+        </td>
+        <td>
+            {% if not app.user %}
+                <input id="email" type="email" name="email" placeholder="Your email (optional)">
+            {% endif %}
+        </td>
+    </tr>
+    <tr>
+
+    </tr>
+    </tbody>
+</table>

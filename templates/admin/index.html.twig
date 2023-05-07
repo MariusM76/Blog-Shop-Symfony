@@ -1,0 +1,127 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ADMIN PANEL!{% endblock %}
+
+{% block body %}
+
+    <div class="container mt-5" id="admin">
+        <div class="row d-flex justify-content-center">
+            <div class="col-8">
+                <div class="card text-center bg-info" id="adminOptions">
+                    <div class="card-header">
+                        <div class="border border-top-0 border-start-0 border-end-0 border-dark mt-3" id="adminText"><h3>ADMIN PANEL</h3></div>
+                        <ul class="nav nav-tabs card-header-tabs justify-content-around mt-5">
+                            <li class="nav-item list-group-flush">
+                                <div class="dropdown-center">
+                                    <button class="btn btn-light dropdown-toggle mb-4" data-bs-auto-close="outside" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Manage Shop
+                                    </button>
+                                    <ul class="dropdown-menu list-group-flush justify-content-evenly">
+                                        <li class="list-group-item list-group-item-action list-group-item-info ">
+                                            <div class="btn-group dropend  dropdown-item">
+                                                <span class="btn btn-outline-warning dropdown-toggle text-dark" data-bs-toggle="dropdown" aria-expanded="true">
+                                                    Products
+                                                </span>
+                                                <ul class="dropdown-menu">
+                                                    <li><a class="dropdown-item" href="{{ url('app_product_new') }}">Add product</a></li>
+                                                    <li><a class="dropdown-item" href="{{ url('app_product_index') }}">Product Panel</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item list-group-item-action list-group-item-info ">
+                                            <div class="btn-group dropend  dropdown-item">
+                                                <span class="btn btn-outline-warning dropdown-toggle text-dark" data-bs-toggle="dropdown" aria-expanded="true">
+                                                    Categories
+                                                </span>
+                                                <ul class="dropdown-menu">
+                                                    <li><a class="dropdown-item" href="{{ url('app_category_new') }}">Add category</a></li>
+                                                    <li><a class="dropdown-item" href="{{ url('app_category_index') }}">Category Panel</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <li class="nav-item list-group-flush">
+                                <div class="dropdown-center">
+                                    <button class="btn btn-light dropdown-toggle mb-4" data-bs-auto-close="outside" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Manage Blog
+                                    </button>
+                                    <ul class="dropdown-menu list-group-flush justify-content-evenly">
+                                        <li class="list-group-item list-group-item-action list-group-item-info ">
+                                            <div class="btn-group dropend  dropdown-item">
+                                                <span class="btn btn-outline-warning dropdown-toggle text-dark" data-bs-toggle="dropdown" aria-expanded="true">
+                                                    Articles
+                                                </span>
+                                                <ul class="dropdown-menu">
+                                                    <li><a class="dropdown-item" href="{{ url('app_article_new') }}">Add article</a></li>
+                                                    <li><a class="dropdown-item" href="{{ url('app_article_index') }}">Article Panel</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item list-group-item-action list-group-item-info ">
+                                            <div class="btn-group dropend  dropdown-item">
+                                                <span class="btn btn-outline-warning dropdown-toggle text-dark" data-bs-toggle="dropdown" aria-expanded="true">
+                                                    Topics
+                                                </span>
+                                                <ul class="dropdown-menu">
+                                                    <li><a class="dropdown-item" href="{{ url('app_topic_new') }}">Add topic</a></li>
+                                                    <li><a class="dropdown-item" href="{{ url('app_topic_index') }}">Topic Panel</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <li class="nav-item list-group-flush">
+                                <div class="dropdown-center">
+                                    <button class="btn btn-light dropdown-toggle mb-4" data-bs-auto-close="outside" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Manage Users
+                                    </button>
+                                    <ul class="dropdown-menu list-group-flush justify-content-evenly">
+                                        <li class="list-group-item list-group-item-action list-group-item-info ">
+                                            <div class="btn-group dropend  dropdown-item">
+                                                <span class="btn btn-outline-warning dropdown-toggle text-dark" data-bs-toggle="dropdown" aria-expanded="true">
+                                                    Users
+                                                </span>
+                                                <ul class="dropdown-menu">
+                                                    <li><a class="dropdown-item" href="{{ url('app_register') }}">Add user</a></li>
+                                                    <li><a class="dropdown-item" href="{{ url('app_user_index') }}">Users Panel</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Welcome admin!!</h5>
+                        <p class="card-text">You can select an option from menus</p>
+                        <a href="{{ url('homepage') }}" class="btn btn-secondary">Go to home page</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $('#adminText').animate({
+                height: '80px',
+                width: '220px'
+            },
+            5000, 'swing');
+
+        $('#adminOptions').animate({
+                height: '80px',
+                width: '900px',
+            },
+            1200, 'swing');
+        // $('#adminOptions').fadeIn(5000, function () {
+        //     // $('#adminOptions').append('fadeIn() completed.')
+        // });
+    </script>
+{% endblock %}
+

@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Blog{% endblock %}
+
+{% block body %}
+
+<div class="container my-4 ">
+    <div class="row ">
+        <nav aria-label="breadcrumb" class="mb-4 pl-3" style="--bs-breadcrumb-divider: ' >';">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ url('homepage') }}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{ url('article_oldindex') }}">Articles</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ article.title }}</li>
+            </ol>
+        </nav>
+
+        <div class="row mt-5 mb-5 justify-content-center">
+            <div class="col-8 bg-white">
+                <img src="{{ asset('images/'~article.image) }}" class="img-fluid rounded-start w-100" alt="...">
+                <h3 class="my-5">{{ article.title }}</h3>
+                <div class="my-3">Updated at: {{ article.getDateToString(article.updatedAt) }}</div>
+                <div class="justify-content-around">
+                    {{ article.body }}
+                </div>
+                <div class="mt-5 mb-3">
+                    Author: {{ article.getAuthor() }}
+                </div>
+            </div>
+        </div>
+        {{ include ('blog/comment.html.twig') }}
+        {{ include ('blog/message.html.twig') }}
+
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,22 @@
+<div class="row mt-5 mb-5 justify-content-center">
+    <div class="col-8 bg-white">
+
+        <button class="btn btn-outline-success btn-lg text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseComment" aria-expanded="false" aria-controls="collapseComment">
+            Leave a message
+        </button>
+
+        <div class="collapse" id="collapseComment">
+            <div class="card card-body">
+                <form action="{{ path('newMessage')}}" method="post" enctype="multipart/form-data">
+
+                    {{ include('blog/commentReplyTable.html.twig') }}
+
+                    <input hidden id="article" type="text" name="article" value="{{ article.id }}">
+                    <textarea id="message" name="message" placeholder="Write a comment" class="form-control w-100" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"></textarea>
+                    <button href="{{ path('newMessage')}}" type="submit" class="btn btn-outline-secondary mt-2 text-dark">POST</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>

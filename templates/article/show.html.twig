@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Article{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+    <h1>Article</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ article.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ article.title }}</td>
+            </tr>
+            <tr>
+                <th>Body</th>
+                <td>{{ article.body }}</td>
+            </tr>
+            <tr>
+                <th>Author</th>
+                <td>{{ article.author }}</td>
+            </tr>
+            <tr>
+                <th>Created_at</th>
+                <td>{{ article.createdAt ? article.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Updated_at</th>
+                <td>{{ article.updatedAt ? article.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+        <div class="row">
+            <div class="col">
+                <a class="btn btn-outline-info text-dark my-3 col-2" href="{{ path('app_article_index') }}">back to list</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <a class="btn btn-outline-warning text-dark my-3 col-2" href="{{ path('app_article_edit', {'id': article.id}) }}">edit</a>
+            </div>
+        </div>
+
+    {{ include('article/_delete_form.html.twig') }}
+    </div>
+</div>
+{% endblock %}

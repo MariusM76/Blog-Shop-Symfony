@@ -1,0 +1,223 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div class="container my-4">
+    <div class="row">
+
+        <div class="col-3 justify-content-center">
+            <h3 class="my-2 pb-3 border-bottom border-4 border-success">ORDER DETAILS: </h3>
+        </div>
+
+        <form class="" style="display: contents" action="{{ url('cart_delivery') }}" method="post" enctype="multipart/form-data">
+            <input hidden name="cartId" value="{{ cartService.cart.id }}">
+        <div class="col-4 justify-content-center border border-3">
+            <div class="fs-4 mx-2 my-3"><span class="badge rounded-pill me-2 bg-secondary">1</span>Delivery options</div>
+            <div class="form-check fs-5 mx-2">
+                <input class="form-check-input" type="radio" name="delivery"
+                       {% if delivery is defined and delivery=='courier' %}
+                         checked
+                       {% endif %}
+                       value="courier" id="courier" required>
+                <label class="form-check-label" for="courier">
+                    Courier delivery
+                </label>
+            </div>
+            <div class="form-check mb-3 mx-2 fs-5">
+                <input class="form-check-input" type="radio"  name="delivery"
+                        {% if delivery is defined and delivery=='personal' %}
+                            checked
+                        {% endif %}
+                       value="personal" id="personal">
+                <label class="form-check-label" for="personal">
+                    Personal pick-up
+                </label>
+            </div>
+            <div></div>
+        </div>
+        <div class="col-4 justify-content-center ms-4">
+            <div class="fs-4 fw-bold border-bottom border-info">Summary:</div>
+            <div class="fs-6 my-2">Cart products: {{ cartService.getCartTotal() }} RON</div>
+            {% if totalDeliveryCost is defined %}
+                <div class="fs-6 border-bottom border-info" id="totalDeliveryCost" value="">Delivery cost: {{ totalDeliveryCost}} RON</div>
+                <div class="fs-5 fw-bold mt-3 border-bottom border-info">TOTAL: {{ cartService.getCartTotal()+totalDeliveryCost }} RON</div>
+            {% else %}
+                <div class="fs-6 border-bottom border-info" id="totalDeliveryCost" value="">Delivery cost: 0 RON</div>
+                <div class="fs-5 fw-bold mt-3 border-bottom border-info">TOTAL: {{ cartService.getCartTotal() }} RON</div>
+            {% endif %}
+            {% if invoiceAdresses is defined %}
+            <div class="fs-5 mt-3 border-bottom border-info fw-bold">Delivery adress: <span class="fs-6 fw-normal">{{ invoiceAdresses }}</span></div>
+            {% endif %}
+        </div>
+
+        <div class="col-3 justify-content-center"></div>
+        <div class="col-4 mt-3 border border-3">
+            <div class="fs-4 mx-2 my-3"><span class="badge rounded-pill me-2 bg-secondary">2</span>Invoice data</div>
+            <div class="form-check mx-2 fs-5">
+                <input class="form-check-input" type="radio" name="adressType" required value="old" id="address"
+                       {% if adressType is defined and adressType == 'old' %}
+                        checked
+                       {% endif %}
+                       data-bs-toggle="collapse" data-bs-target="#collapseAddress" aria-expanded="false" aria-controls="collapseAddress">
+                <label class="form-check-label" for="flexRadioDefault1">
+                    Current saved data
+                </label>
+
+                <div class="collapse" id="collapseAddress">
+                    <div class="card card-body fs-6">
+                        {% if adresses is defined %}
+                            <select type="text" class="form-control" id="adress" name ="currentAddress">
+                                <option label="Choose an adress:" disabled></option>
+                                {% for adress in adresses %}
+                                    <option value="{{ adress.id }}">
+                                        {{ adress.city }}, {{ adress.state}}, str. {{ adress.adress }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        {% endif %}
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-check mx-2 fs-5">
+                <input class="form-check-input" type="radio" name="adressType" value="new"
+                        {% if adressType is defined and adressType == 'new' %}
+                            checked
+                        {% endif %}
+                       id="address" data-bs-toggle="modal" data-bs-target="#newAdressModal">
+                <label class="form-check-label" for="flexRadioDefault2">
+                    New address
+                </label>
+
+                <div class="modal fade" id="newAdressModal" tabindex="-1" aria-labelledby="newAdressModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="newAdressModalLabel">Enter new data:</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body fs-5">
+                                <div class="fs-6">
+                                    <label for="firstName" >First Name:</label>
+                                    <input class="d-flex justify-content-center w-100" type="text" name="firstName" id="firstName">
+                                </div>
+                                <div class="fs-6">
+                                    <label for="lastName" >Last Name:</label>
+                                    <input class="d-flex justify-content-center w-100" type="text" name="lastName" id="lastName">
+                                </div>
+                                <div class="fs-6">
+                                    <label for="city" >City:</label>
+                                    <input class="d-flex justify-content-center w-100" type="text" name="city" id="city">
+                                </div>
+                                <div class="fs-6">
+                                    <label for="state" >State:</label>
+                                    <input class="d-flex justify-content-center w-100" type="text" name="state" id="state">
+                                </div>
+                                <div class="fs-6">
+                                    <label for="adress" >Adress:</label>
+                                    <textarea class="d-flex justify-content-center w-100" type="text" name="adress" id="adress"></textarea>
+                                </div>
+                                <div class="fs-6">
+                                    <label for="phone" >Phone:</label>
+                                    <input class="d-flex justify-content-center w-100" type="number" name="phone" id="phone">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-4"></div>
+
+        <div class="col-3 justify-content-center"></div>
+        <div class="col-4 my-3 justify-content-end border border-3">
+            <div class="fs-4 mx-2 my-3"><span class="badge rounded-pill me-2 bg-secondary">3</span>Payment options</div>
+            <div class="form-check mx-2 fs-5">
+                <input class="form-check-input" type="radio" name="payment"
+                        {% if payment is defined and payment=='card' %}
+                            checked
+                        {% endif %}
+                       value="card" id="card">
+                <label class="form-check-label" for="flexRadioDefault1">
+                    Card
+                </label>
+            </div>
+            <div class="form-check mx-2 fs-5">
+                <input class="form-check-input" type="radio" name="payment"
+                        {% if payment is defined and payment=='monthly' %}
+                            checked
+                        {% endif %}
+                       value="monthly" required id="monthly">
+                <label class="form-check-label" for="flexRadioDefault2">
+                    Online monthly payments
+                </label>
+            </div>
+            <div class="form-check mx-2 fs-5">
+                <input class="form-check-input" type="radio" name="payment"
+                        {% if payment is defined and payment=='cash' %}
+                            checked
+                        {% endif %}
+                       value="cash" id="cash">
+                <label class="form-check-label" for="flexRadioDefault2">
+                    Cash on delivery
+                </label>
+            </div>
+        </div>
+        <div class="col-4"></div>
+
+        <div class="col-3 justify-content-center"></div>
+        <div class="col-4 my-3">
+            <button class="btn btn-outline-info text-dark" type="submit">Calculate</button>
+        </div>
+        <div class="col-5"></div>
+
+            <div class="col-3 justify-content-center"></div>
+           <div class="col-4 my-3">
+                <button class="btn btn-outline-warning text-dark" formaction="{{ url('finalizeOrder') }}" type="submit">Finalize order</button>
+          </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    var deliveryCost = 0;
+    var paymentCost = 0;
+    var totalDeliveryCost = 0;
+
+    $('#courier').on('click',function () {
+        deliveryCost = 15 ;
+        assignDeliveryCost()
+    });
+
+    $('#personal').on('click',function () {
+        deliveryCost = 0;
+        assignDeliveryCost()
+    });
+
+    $('#card').on('click',function () {
+        paymentCost = 0;
+        assignDeliveryCost()
+    });
+
+    $('#monthly').on('click',function () {
+        paymentCost = 0;
+        assignDeliveryCost()
+    });
+
+    $('#cash').on('click',function () {
+        paymentCost = 5;
+        assignDeliveryCost()
+    })
+
+    function assignDeliveryCost(){
+        totalDeliveryCost = deliveryCost + paymentCost;
+        $('#totalDeliveryCost').val(totalDeliveryCost);
+    }
+
+</script>
+
+{% endblock %}

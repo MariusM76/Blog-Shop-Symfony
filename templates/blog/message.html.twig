@@ -1,0 +1,68 @@
+<div class="row mt-2 mb-3 justify-content-center">
+    <div class="col-8 bg-white">
+        <div>
+            <button class="btn btn-outline-warning btn-lg text-dark " type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseMessages" aria-expanded="false" aria-controls="collapseMessages">
+                Messages
+                <span  class="badge rounded-pill bg-secondary">{{ messages.count }}</span>
+            </button>
+        </div>
+        <div class="collapse my-3" id="collapseMessages">
+
+            {% if messages is defined %}
+            {% for message in messages %}
+
+            <div class="accordion w-100 my-3" id="a{{ message.getId }}">
+
+                <div class="accordion-item border-bottom-0">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne{{ message.getId }}" aria-expanded="true" aria-controls="collapseOne{{ message.getId }}">
+                            {{ message.writer }}:
+                        </button>
+                    </h2>
+                    <div id="collapseOne{{ message.getId }}" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#a{{ message.getId }}">
+                        <div class="accordion-body border-bottom">
+                            {{ message.message }}
+                        </div>
+                    </div>
+                    <div class="accordion-header bg-white border-bottom-0" style="height: 50px; width: 60px" id="headingOne">
+                        <div class="accordion-button collapsed bg-white border-bottom-0" data-bs-toggle="collapse" data-bs-target="#collapseReply{{ message.getId }}" aria-expanded="false" aria-controls="collapseReply">
+                            <small>Reply</small>
+                        </div>
+                    </div>
+                </div>
+
+                {% for reply in message.getReplies %}
+
+                    <div class="accordion-item  bg-secondary text-dark bg-opacity-25 col-md-4 offset-md-2" style="width: 700px">
+                        <div id="collapseOne{{ message.getId }}" class="accordion-collapse collapse w-100 show" aria-labelledby="headingOne" data-bs-parent="#a">
+                            <div class="accordion-body">
+                                <div><small>{{ reply.writer }}:</small></div>
+                                {{ reply.message }}
+                            </div>
+                        </div>
+                    </div>
+
+                {% endfor %}
+
+                <div class="accordion-item  bg-secondary text-dark bg-opacity-25 col-md-4 offset-md-2" style="width: 700px">
+                    <div id="collapseReply{{ message.getId }}" class="accordion-collapse collapse  w-100" aria-labelledby="headingOne" data-bs-parent="#a">
+                        <div class="accordion-body">
+                            <form action="{{ path('newReply')}}" method="post" enctype="multipart/form-data">
+                                {{ include('blog/commentReplyTable.html.twig') }}
+                                <input hidden id="article" type="text" name="article" value="{{ article.getId }}">
+                                <input hidden id="messageId" type="text" name="messageId" value="{{ message.getId }}">
+                                <textarea id="message" name="message" placeholder="Write a comment" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"></textarea>
+                                <button href="{{ path('newReply')}}" type="submit" class="btn btn-outline-secondary mt-2 text-dark">Reply</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% endfor %}
+            {% endif %}
+
+        </div>
+    </div>
+</div>

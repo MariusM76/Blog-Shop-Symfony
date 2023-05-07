@@ -1,0 +1,49 @@
+<div class="container-fluid bg-warning bg-opacity-10  border border-2 shadow my-2 border border border-2 border-bottom">
+<div class="container my-2 align-middle">
+    <div class="row align-middle">
+        <div class="col-4 text-start align-middle">
+            <span class="px-2 text-decoration-none align-middle">
+                <a class="text-decoration-none" href="#"><i
+                            class="fa fa-facebook-official text-dark text-decoration-none"
+                            aria-hidden="true"></i></a>
+            </span>
+            <span class="px-2 align-middle">
+                <a href="#"><i class="fa fa-instagram text-dark" aria-hidden="true"></i></a>
+            </span>
+            <span class="px-2 align-middle">
+                <a href="#"><i class="fa fa-twitter text-dark" aria-hidden="true"></i></a>
+            </span>
+            <span class="px-2 align-middle">
+                <a href="#"><i class="fa fa-pinterest-p text-dark" aria-hidden="true"></i></a>
+            </span>
+        </div>
+        <div class="col-4 text-center align-middle">
+            <form action="{{ path ('app_search') }}"  method="get" class="d-flex px-3 align-middle" role="search">
+                <input class="form-control fw-semibold me-2 border-bottom border-top-0 border-start-0 border-end-0"
+                       type="text" name="query" placeholder="Search..." aria-label="Search"/>
+                <button  class="btn btn-outline-secondary align-middle" type="submit">
+                    <i class="fa fa-search"></i>
+                </button>
+            </form>
+        </div>
+        <div class="col-4 text-end align-middle">
+                {% if app.user %}
+                    <div class="mb-3">
+                        You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+                    </div>
+                {% else %}
+                    <a href="{{ url('app_login') }}" class="btn btn-outline-warning text-dark bg-light bg-gradient align-middle"  >Login</a>
+                {% endif %}
+            {% if cartService.getCartCount() >0 %}
+                <a class="mx-3 mt-3 align-middle" href="{{url('cart')}}">
+                    <i class="fa fa-shopping-basket text-dark fs-4 align-middle position-relative " aria-hidden="true">
+                        <span id="cartCount" value="{{ cartService.getCartCount() }}" class="position-absolute top-0 start-100 fs-6 translate-middle badge rounded-pill bg-danger cartCount">
+                            {{ cartService.getCartCount() }}
+                        </span>
+                    </i>
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+</div>

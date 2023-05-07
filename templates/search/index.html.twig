@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Search results{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-8">
+
+    <h1>Search results ({{ requestData }}):</h1>
+        <h3>Shop results: </h3>
+
+        <div class="card-group my-4">
+            {%  if results  %}
+                {% for product in results %}
+                    <div class="card mx-3" style="width: 150px; height: 400px" >
+                        <img src="{{ asset('images/'~product.image) }}" class="card-img-top" alt="..." style="height: 250px">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ product.name }}</h5>
+                            <p class="card-text">{{ product.description }}</p>
+                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div>No results found !!!</div>
+            {% endif %}
+        </div>
+
+        <h3>Article results: </h3>
+
+            <div class="row">
+                {% if articleResult %}
+                {% for article in articleResult %}
+
+                    <a href="{{ url('article',{'article':article.id}) }}" class="text-decoration-none text-dark d-flex justify-content-center">
+                        <div class="card mb-4" style="max-width: 1000px;">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <img src="{{ asset('images/'~article.image) }}" class="img-fluid rounded-start" alt="...">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ article.title }}</h5>
+                                        <p class="card-text">{{ article.body }}</p>
+                                        <div class="card-text align-items-end mb-4 "><small class="text-muted">Last updated {{ article.getDateToString(article.updatedAt) }}</small></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+
+                {% endfor %}
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+    <div class="container my-4 ">
+        <div class="row ">
+
+            <nav aria-label="breadcrumb" class="mb-4 pl-3" style="--bs-breadcrumb-divider: ' >';">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{url('homepage') }}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{url('shop') }}">Shop</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ product.name }}</li>
+                </ol>
+            </nav>
+
+            <div class="col-4 d-flex" style="height: 500px">
+                <img src="{{ asset('images/'~product.image) }}" class="card-img-top" alt="...">
+            </div>
+
+            <div class="col-4 mx-4 position-relative">
+                <h3>{{ product.name }}</h3>
+                <div>
+                    {{ product.description }}
+                </div>
+                <a class="btn btn-outline-success btn-lg text-dark position-absolute bottom-0 start-0 my-2 mx-2" href="{{ url('cart_add',{'product':product.id}) }}">
+                    Add to cart
+                </a>
+            </div>
+
+            <div class="col-2 position-relative border-start mx-2">
+                <h3>Price</h3>
+                <strong class="fs-4">{{ product.price }} RON</strong>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
